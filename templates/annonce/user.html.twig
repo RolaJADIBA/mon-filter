@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AnnonceController!{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row mt-5">
+            {% for annonce in annonces %}
+            <div class="card mb-3" style="max-width: 1000px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="{{asset('uploads/annonces/blog-1.jpeg')}}" class="img-fluid rounded-start" alt="{{annonce.titre}}">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <h5 class="card-title">{{annonce.titre}}</h5>
+                                    <p class="card-text">{{annonce.prix}} &nbsp;€</p>
+                                </div>
+                                <div class="col-md-2">
+                                    <a href="#" data-bs-toggle="modal" data-annonce={{annonce.id}} data-bs-target="#modifierAnnonce" class="text-decoration-non"><span class="text-secondary p-3"><i class="fa-solid fa-pen"></i></span></a>
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#deleteAnnonce" data-annonce={{annonce.id}} data-titre={{annonce.titre}} class="text-decoration-non modal-trigger"><span class="text-danger"><i class="fa-solid fa-trash-can"></i></span></a>
+                                </div>
+                            </div>
+
+                            <div class="card-text-bottm mt-5">
+                                <p class="card-text">
+                                    <small class="text-muted">{{annonce.lieu}}</small>
+                                </p>
+                                <p class="card-text d-flex justify-content-between">
+                                    <small class="text-muted">{{annonce.createdAt|date("m/d/Y")}}</small>
+                                    <i class="fa-regular fa-heart text-muted"></i>
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+            {# Affiche le page par page #}
+        {# <div class="navigation">
+            {{ knp_pagination_render(annonces) }}
+        </div> #}
+    </div>
+
+{% include "modal/modifierAnnonce.html.twig" %}
+
+{% include "modal/supprimerAnnonce.html.twig" %}
+
+{% endblock %}
+

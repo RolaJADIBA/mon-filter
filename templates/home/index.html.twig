@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Filter{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success" role="alert">{{ message }}</div>
+    {% endfor %}
+
+    {% if app.user %}
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-3">
+                <a href="#" data-bs-toggle="modal" data-bs-target="#ajoutAnnonce" class="btn btn-warning text-white mx-auto btn-lg"><i class="fa-solid fa-plus"></i>&nbsp;&nbsp;Déposer une annonce</a>
+            </div>
+        </div>
+    {% endif %}
+
+
+    <div class="recherch">
+        <div class="card shadow p-3 rounded">
+            <div class="card-body">
+                <div class="row justify-content-between">
+                    <div class="col-md-7">
+                        {% for annonceType in annonceTypes %}
+                            <input type="radio" class="mr-3">&nbsp;&nbsp;{{annonceType.nom}}&nbsp;&nbsp;&nbsp;&nbsp;</input>
+                        {% endfor %}
+                    </div>
+
+                    <div class="col-md-4">
+                        <form class="d-flex" role="search" action="{{ path('search') }}" method="get">
+                            <input class="form-control me-2" name="query" type="search" placeholder="Rechercher..." aria-label="Search">
+                            <button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <button class="btn btn-secondary btn-lg dropdown-toggle mt-5 btn-large" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        Categories
+                    </button>
+                    <ul class="dropdown-menu multi-level" aria-labelledby="dropdownMenuButton1">
+                        {% for categorie in categories %}
+                            <li class="dropdown-submenu">
+                                <a class="dropdown-item" href="#">{{ categorie.nom }}</a>
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+                                        <li class="">
+                                            <a class="text-black" href="#">
+                                                {% for categorieDetail in categorie.categorieDetails %}
+                                                   <p>&nbsp;&nbsp;{{categorieDetail.nom}}&nbsp;&nbsp;</p>
+                                                {% endfor %}
+                                            </a>
+                                        </li>
+                                    </ul>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {# OWL CAROUSEL #}
+    <div class="card cat shadow p-3 mt-5">
+        <h5 class="card-title fs-2 mb-3">Tous Les Categories</h5>
+        <div class="owl-carousel owl-theme">
+            {% for categorie in categories %}
+                <div class="item">
+                    <a href="{{ path('annonce_categorie', {'id': categorie.id}) }}">
+                        <div class="card bg-dark text-white">
+                            <img src="{{asset('uploads/categories/' ~ categorie.image)}}" height="200" class="card-img" alt="{{categorie.nom}}">
+                            <div class="card-img-overlay">
+                                <h5 class="card-title">{{categorie.nom}}</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
+
+{% include "modal/ajoutAnnonce.html.twig" %}
+
+{% endblock %}
+
+

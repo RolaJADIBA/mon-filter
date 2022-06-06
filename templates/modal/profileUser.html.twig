@@ -1,0 +1,33 @@
+<!-- Modal -->
+<div class="modal fade" id="profileUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-warning" id="exampleModalLabel">{{app.user.username}}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-muted">
+        <div class="row">
+            <div class="col-md-3">
+                <img src="{{asset('uploads/nav/' ~ app.user.photo)}}" class="rounded-circle" height="75" alt="{{app.user.username}}">
+            </div>
+            <div class="col-md-9 fs-6">
+               <p>member depuis: {{app.user.dateInscription|date("d/m/Y")}}</p>
+               <p>Genre: {{app.user.genre}}</p>
+               <p>Email: {{app.user.email}}</p>
+               <p>User name: {{app.user.username}}</p>
+               <p>Date de naissance: {{app.user.dateNaissance|date("d/m/Y")}}</p>
+               <p>temps de reponse: {{app.user.tempsReponse|date("d/m/Y")}}</p>
+               <p>Téléphone: {{app.user.telephone}}</p>
+               <p>Adresse: {{app.user.adresse}}</p>
+            </div>
+        </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+
+</div>

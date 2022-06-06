@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello UserAccountController!{% endblock %}
+
+{% block body %}
+<div class="container">
+
+<div class="row justify-content-center mt-5">
+        <div class="col-md-9">
+            <div class="card rounded">
+                <div class="card-body">
+                    <div class="row justify-content-between">
+                        <div class="col-md-9">
+                            <figure class="d-flex">
+                                <img src="{{ asset('uploads/nav/' ~ user.photo) }}" class="rounded-circle" height="120" alt="{{user.username}}">
+                                <figcaption>
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#ajoutPhotoUser"><i class="fa-solid fa-circle-plus text-muted"> </i></a>
+                                </figcaption>
+                            </figure>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#profileUser" class="btn btn-outline-secondary mt-5">Voir mon profil public</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-9">
+        <a href="{{ path('annonce_user') }}" class="text-decoration-none">
+            <div class="card rounded">
+                <div class="card-body">
+                    <div class="row justify-content-between">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <span class="text-warning"><i class="fa-solid fa-bell"></i></span>
+                                </div>
+                                <div class="col-md-11">
+                                    <h2 class="text-warning">Mes annonces</h2>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <p class="card-text text-muted">Gérer mes annonces déposées</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        </div>
+    </div>
+
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-9">
+        <a href="" data-bs-toggle="modal" data-bs-target="#modifierUserInfo" class="text-decoration-none">
+            <div class="card rounded">
+                <div class="card-body">
+                    <div class="row justify-content-between">
+
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <span class="text-warning"><i class="fa-solid fa-gear"></i></span>
+                                </div>
+                                <div class="col-md-11">
+                                    <h2 class="text-warning">Mes parameters</h2>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <p class="card-text text-muted">Compléter et modifier mes informations privées</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        </div>
+    </div>
+
+    <a class="text-danger" href="{{ path('app_logout') }}">Déconnexion</a>
+
+</div>
+
+{% include "modal/ajoutPhotoUser.html.twig" %}
+{% include "modal/profileUser.html.twig" %}
+{% include "modal/modifierUserInfo.html.twig" %}
+
+{% endblock %}

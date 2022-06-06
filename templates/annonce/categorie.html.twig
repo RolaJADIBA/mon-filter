@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Annonce {% endblock %}
+
+{% block body %}
+
+<div class="container">
+	<div class="row mt-5">
+        <h3 class="text-muted">Catégorie <span class="text-warning">{{categorie.nom}}</span> | Le nombre d'annonces <span class="text-warning">{{annonces|length}}</span></h3>
+        {% for annonce in annonces %}
+            <div class="card mb-3 mt-3" style="max-width: 1000px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="{{asset('uploads/annonces/blog-1.jpeg')}}" class="img-fluid rounded-start" alt="{{annonce.titre}}">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">{{annonce.titre}}</h5>
+                            <p class="card-text">{{annonce.prix}} &nbsp;€</p>
+
+                            <div class="card-text-bottm mt-5">
+                                <p class="card-text">
+                                    <small class="text-muted">{{annonce.lieu}}</small>
+                                </p>
+                                <p class="card-text d-flex justify-content-between">
+                                    <small class="text-muted">{{annonce.createdAt|date("m/d/Y")}}</small>
+                                    <i class="fa-regular fa-heart text-muted"></i>
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
