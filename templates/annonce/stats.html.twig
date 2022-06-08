@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Statistiques {% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <h3 class="text-warning text-center">Statistiques</h3>
+        <div class="mt-5" style="width: 50%;">
+            <canvas id="categories" width="250" height="500"></canvas>
+        </div>
+        <div class="mt-5" style="width: 50%;">
+            <canvas id="annonces" width="250" height="100"></canvas>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js" integrity="sha512-sW/w8s4RWTdFFSduOTGtk4isV1+190E/GghVffMA9XczdJ2MDzSzLEubKAs5h0wzgSJOQTRYyaz73L3d6RtJSg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let categories = document.getElementById("categories")
+    let categGraph = new Chart(categories, {
+        type: "pie",
+        data: {
+            labels: {{catNom|raw}},
+            datasets: [{
+                label: "Répartion des catégories",
+                data: {{catCount|raw}},
+                backgroundColor: {{catColor|raw}}
+            }]
+        }
+    })
+
+    let annonces = document.getElementById("annonces")
+    let annGraph = new Chart(annonces, {
+        type: 'line',
+        data: {
+            labels: {{ dates|raw }},
+            datasets: [{
+                label: "Nombre d'annonce",
+                data : {{ annnoncesCount|raw }}
+            }]
+        }
+    })
+
+})
+
+</script>
+{% endblock %}

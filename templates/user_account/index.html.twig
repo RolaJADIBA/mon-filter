@@ -82,6 +82,37 @@
         </div>
     </div>
 
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-9">            
+                <div class="card rounded">
+                    <div class="card-body">
+                        <div class="row justify-content-between">
+
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <span class="text-warning"><i class="fa-solid fa-arrow-trend-up"></i></span>
+                                    </div>
+                                    <div class="col-md-11">
+                                        <h2 class="text-warning">Statistiques</h2>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <p class="card-text"><a href="" data-bs-toggle="modal" data-bs-target="#statsCat" class="text-muted text-decoration-none">
+                                    Statistiques les annonces par les catégories</a></p>
+                                <p class="card-text"><a href="" data-bs-toggle="modal" data-bs-target="#statsDate" class="text-muted text-decoration-none">
+                                    Statistiques les annonces par la date</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+
     <a class="text-danger" href="{{ path('app_logout') }}">Déconnexion</a>
 
 </div>
@@ -89,5 +120,7 @@
 {% include "modal/ajoutPhotoUser.html.twig" %}
 {% include "modal/profileUser.html.twig" %}
 {% include "modal/modifierUserInfo.html.twig" %}
+{% include "modal/statsCat.html.twig" %}
+{% include "modal/statsDate.html.twig" %}
 
 {% endblock %}

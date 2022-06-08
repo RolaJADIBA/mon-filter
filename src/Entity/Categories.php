@@ -39,6 +39,11 @@ class Categories
      */
     private $image;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $color;
+
     public function __construct()
     {
         $this->annonces = new ArrayCollection();
@@ -137,6 +142,18 @@ class Categories
     public function __toString()
     {
         return $this->nom;
+    }
+
+    public function getColor(): ?string
+    {
+        return $this->color;
+    }
+
+    public function setColor(?string $color): self
+    {
+        $this->color = $color;
+
+        return $this;
     }
 
 }

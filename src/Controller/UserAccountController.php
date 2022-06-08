@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Form\RegistrationFormType;
 use App\Form\UserInfoType;
 use App\Form\UserPhotoType;
+use App\Repository\AnnoncesRepository;
+use App\Repository\CategoriesRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Filesystem\Filesystem;
@@ -17,7 +19,7 @@ class UserAccountController extends AbstractController
     /**
      * @Route("/user/account", name="app_user_account")
      */
-    public function index(Request $request, EntityManagerInterface $entityManager): Response
+    public function index(Request $request, EntityManagerInterface $entityManager, CategoriesRepository $categoriesRepository, AnnoncesRepository $annoncesRepository): Response
     {
         $user = $this->getUser();
 
@@ -71,18 +73,41 @@ class UserAccountController extends AbstractController
 
         }
 
+        //STATSTIQUE LES ANNONCES PAR LES CATEGORIES
+        $categories = $categoriesRepository->findAll();
+
+        $catNom = [];
+        $catColor = [];
+        $catCount = [];
+
+        foreach($categories as $categorie){
+            $catNom[] = $categorie->getNom();
+            $catColor[] = $categorie->getColor();
+            $catCount[] = count($categorie->getAnnonces());
+        }
+
+        $annonces = $annoncesRepository->countByDate();
+        $dates = [];
+        $annnoncesCount = [];
+
+        foreach($annonces as $annonce)
+        {
+            $date = $annonce['dateAnnonces'];
+            $annnoncesCount[] = $annonce['count'];
+        }
+
+
         return $this->render('user_account/index.html.twig', [
             'user' => $user,
             'form_photo' => $form_photo->createView(),
-            'formInfo' => $formInfo->createView()
+            'formInfo' => $formInfo->createView(),
+            'catNom' => json_encode($catNom),
+            'catColor' => json_encode($catColor),
+            'catCount' => json_encode($catCount),
+            'dates' => json_encode($dates),
+            'annnoncesCount' => json_encode($annnoncesCount)
+
         ]);
     }
-
-    //     /**
-    //  * @Route("/user/parameter", name="app_user_account")
-    //  */
-    // public function index(Request $request): Response
-    // {
-    // }
 
 }

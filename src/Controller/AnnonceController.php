@@ -6,6 +6,7 @@ use App\Entity\Annonces;
 use App\Entity\Categories;
 use App\Form\AnnoncesType;
 use App\Repository\AnnoncesRepository;
+use App\Repository\CategoriesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -109,6 +110,44 @@ class AnnonceController extends AbstractController
 
         return $this->redirectToRoute('app_annonce');
 
+    }
+
+    /**
+     * @Route("/stats" , name="stats")
+     */
+    public function stastique(CategoriesRepository $categoriesRepository, AnnoncesRepository $annoncesRepository)
+    {
+        $categories = $categoriesRepository->findAll();
+
+        $catNom = [];
+        $catColor = [];
+        $catCount = [];
+
+        foreach($categories as $categorie){
+            $catNom[] = $categorie->getNom();
+            $catColor[] = $categorie->getColor();
+            $catCount[] = count($categorie->getAnnonces());
+        }
+
+        $annonces = $annoncesRepository->countByDate();
+        $dates = [];
+        $annnoncesCount = [];
+
+        // dd($annonces);
+        foreach($annonces as $annonce)
+        {
+            $dates[] = $annonce['dateAnnonces'];
+            $annnoncesCount[] = $annonce['count'];
+        }
+
+        
+        return $this->render('annonce/stats.html.twig',[
+            'catNom' => json_encode($catNom),
+            'catColor' => json_encode($catColor),
+            'catCount' => json_encode($catCount),
+            'dates' => json_encode($dates),
+            'annnoncesCount' => json_encode($annnoncesCount)
+        ]);
     }
 
 }
