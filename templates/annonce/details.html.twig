@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les details d'annonce!{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="mt-3 w-250">
+            {% for message in app.flashes('message') %}
+                <div class="alert alert-success">{{message}}</div>
+            {% endfor %}
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-8 mt-5">
+                <div class="card mb-3 shadow" style="max-width: 1000px;">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                        <img src="{{asset('uploads/annonces/' ~ annonce.images)}}" class="img-fluid rounded-start" alt="{{annonce.titre}}">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h3 class="card-title">{{annonce.titre}}</h3>
+                                <strong>{{annonce.prix}} €</strong>
+                                <p>{{annonce.createdAt|date("Y-m-d")}}</p>
+                                <p class="card-text"><small class="text-muted">{{annonce.lieu}}</small></p>
+                                <h5>Description</h5>
+                                    <p class="card-text text-muted"><span id="detail">{{annonce.description|slice(0,65)}}</span>
+                                    <span class="card-text text-muted" style="display:none;" id="description">{{annonce.description}}</span></p>
+                                    <a href={{path('annonce_details',{'id': annonce.id})}} class="text-decoration-none button-detail"  onclick="myFunction()">Voir plus....</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mt-5">
+                <div class="card shadow" style="width: 25rem;">
+                    <div class="card-body">
+                        {# <h5 class="card-title">Card title</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="card-link">Card link</a>
+                        <a href="#" class="card-link">Another link</a> #}
+                        <div class="row">
+                            <div class="col-md-4">
+                                <img src="{{asset('uploads/nav/' ~ annonce.user.photo)}}" class="rounded-circle" height="100" alt="{{annonce.user.username}}">
+                            </div>
+                            <div class="col-md-8 text-center">
+                                <p>{{annonce.user.username}}</p>
+                                <p class="card-text"><small class="text-muted">{{annoncesUser|length}} annonces</small></p>
+                                <hr class="dropdown-divider">
+                                <p class="card-text"><small class="text-muted">Répond généralement en {{annonce.user.tempsReponse}}</small></p>
+                                <div class="row">
+                                    <a href="" class="btn btn-warning btn-block text-white">Acheter</a>
+                                    <div class="col-md-6 mt-3">
+                                        <a data-bs-toggle="modal" data-bs-target="#numeroUser" class="btn btn-outline-secondary btn-block">Numero</a>
+                                    </div>
+                                    <div class="col-md-6 mt-3">
+                                        <a data-bs-toggle="modal" data-bs-target="#emailUser" class="btn btn-outline-success btn-block">Email</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% include "modal/numeroUser.html.twig" %}
+{% include "modal/emailUser.html.twig" %}
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    function myFunction() {
+        let button_detail = document.querySelector('.button-detail');
+        let description = document.getElementById('description');
+        let detail = document.getElementById('detail');
+        let more = document.getElementById('more');
+            if (description.style.display === "none") {
+                description.style.display = "inline";
+                button_detail.innerHTML = "Voir plus";
+                detail.style.display = "none";
+            } else {
+                description.style.display = "none";
+                button_detail.innerHTML = "Voir moins";
+                detail.style.display = "inline";
+            }
+        }
+</script>
+{% endblock %}

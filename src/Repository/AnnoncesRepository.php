@@ -53,6 +53,27 @@ class AnnoncesRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    public function setInterval($from, $to, $cat = null)
+    {
+        // $query = $this->getEntityManager()->createQuery("
+        // SELECT a FROM App\Entity\Annonces a WHERE a.created_at > :from AND a.created_at < :to 
+        // ");
+        // $query->setParameter(':from', $from);
+        // $query->setParameter(':to', $to);
+        // return $query->getResult();
+        $query = $this->createQueryBuilder('a')
+            ->where('a.created_at > :from')
+            ->andWhere('a.created_at < :to')
+            ->setParameter(':from', $from)
+            ->setParameter(':to', $to);
+            if($cat != null){
+                $query->leftJoin('a.categorie','c')
+                      ->andWhere('c.id = :cat')
+                      ->setParameter(':cat', $cat);
+            }
+        return $query->getQuery()->getResult();    
+    }
+
 
     /**
      * @throws ORMException

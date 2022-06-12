@@ -4,15 +4,18 @@ namespace App\Controller;
 
 use App\Entity\Annonces;
 use App\Entity\Categories;
+use App\Form\AnnonceContactType;
 use App\Form\AnnoncesType;
 use App\Repository\AnnoncesRepository;
 use App\Repository\CategoriesRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
-
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mailer\MailerInterface;
 
 class AnnonceController extends AbstractController
 {
@@ -147,6 +150,41 @@ class AnnonceController extends AbstractController
             'catCount' => json_encode($catCount),
             'dates' => json_encode($dates),
             'annnoncesCount' => json_encode($annnoncesCount)
+        ]);
+    }
+
+        /**
+     * @Route("/annonce/details/{id}" , name="annonce_details")
+     */
+    public function annonceDetails(AnnoncesRepository $annoncesRepository, $id, Request $request, MailerInterface $mailer)
+    {
+        $annonce = $annoncesRepository->find($id);
+        $user = $annonce->getUser();
+        $annoncesUser = $annoncesRepository->findBy(['user' => $user]);
+
+        $form_contact = $this->createForm(AnnonceContactType::class);
+        $contact = $form_contact->handleRequest($request);
+
+        if ($form_contact->isSubmitted() && $form_contact->isValid()) {
+            $email = (new TemplatedEmail())
+                ->from($contact->get('email')->getData())
+                ->to($user->getEmail())
+                ->subject('Contact au sujet de votre subject"' . $annonce->getTitre() . '"')
+                ->htmlTemplate('email/contact.html.twig')
+                ->context([
+                    'annonce' => $annonce,
+                    'mail' => $contact->get('email')->getData(),
+                    'message' => $contact->get('message')->getData()
+                ]);
+                $mailer->send($email);
+                $this->addFlash('message', 'votre email a bien été envoyé');
+                return $this->redirectToRoute('annonce_details', ['id' => $annonce->getId()]);
+        }
+        
+        return $this->render('annonce/details.html.twig',[
+            'annonce' => $annonce,
+            'annoncesUser' => $annoncesUser,
+            'form_contact' => $form_contact->createView()
         ]);
     }
 

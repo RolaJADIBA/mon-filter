@@ -32,6 +32,8 @@ class HomeController extends AbstractController
 
         $details = $this->getDoctrine()->getRepository(Details::class)->findAll();
 
+        $annoncesInterval = $annoncesRepository->setInterval("2000-01-01", "2008-01-01", 24);
+        // dd($annoncesInterval);
         $annonce = new Annonces();
         $form = $this->createForm(AnnoncesType::class, $annonce);
         $form->handleRequest($request);

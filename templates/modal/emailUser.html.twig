@@ -1,0 +1,31 @@
+<!-- Modal -->
+<div class="modal fade" id="emailUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-warning" id="exampleModalLabel">Envoyer un mail à {{annonce.user.username}}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      {{form_start(form_contact)}}
+      <div class="modal-body text-muted">
+        {{ form_row(form_contact.title) }}
+        {{ form_row(form_contact.email) }}
+        {{ form_row(form_contact.message) }}
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-warning text-white" type="submit">Envoyer</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+      </div>
+      {{form_end(form_contact)}}
+    </div>
+  </div>
+</div>
+
+{% block javascripts %}
+<script>
+window.onload = () =>{
+    document.querySelector("#annonce_contact_title").value = "{{annonce.titre}}"
+}
+
+</script>
+{% endblock %}

@@ -1,11 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AnnonceController!{% endblock %}
+{% block title %}Les annonces!{% endblock %}
 
 {% block body %}
     <div class="container">
         <div class="row mt-5">
             {% for annonce in annonces %}
+            <a href="{{path('annonce_details',{'id': annonce.id}) }}" class="text-decoration-none text-muted">
             <div class="card mb-3" style="max-width: 1000px;">
                 <div class="row g-0">
                     <div class="col-md-4">
@@ -13,10 +14,6 @@
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
-                            {# <div class="row">
-                                <h5 class="card-title">{{annonce.titre}}</h5>
-                                <p class="card-text">{{annonce.prix}} &nbsp;€</p>
-                            </div> #}
                             <div class="row">
                                 <div class="col-md-10">
                                     <h5 class="card-title">{{annonce.titre}}</h5>
@@ -48,13 +45,14 @@
                     </div>
                 </div>
             </div>
+            </a>
+                {# Affiche le page par page #}
+                {# <div class="navigation">
+                    {{ knp_pagination_render(annonces) }}
+                </div> #}
+
             {% endfor %}
         </div>
-            {# Affiche le page par page #}
-        {# <div class="navigation">
-            {{ knp_pagination_render(annonces) }}
-        </div> #}
-
     </div>
 
 {% endblock %}
