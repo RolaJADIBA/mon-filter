@@ -45,12 +45,22 @@
                             <li class="dropdown-submenu">
                                 <a class="dropdown-item" href="#">{{ categorie.nom }}</a>
                                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-                                        <li class="">
-                                            <a class="text-black" href="#">
-                                                {% for categorieDetail in categorie.categorieDetails %}
-                                                   <p>&nbsp;&nbsp;{{categorieDetail.nom}}&nbsp;&nbsp;</p>
-                                                {% endfor %}
-                                            </a>
+                                        <li class="dropdown-submenu">
+
+
+                                            {% for categorieDetail in categorie.categorieDetails %}
+                                                <a class="text-dark" href="{{path('app_filtre',{'id': categorieDetail.id})}}"><p>&nbsp;&nbsp;{{categorieDetail.nom}}&nbsp;&nbsp;</p>
+                                                    {# <ul class="dropdown-menu multi-level">
+                                                            {% for detail in categorieDetail.details %}
+                                                                    <li>
+                                                                        <a class="text-black dropdown-item" href="#">{{detail.nom}}</a>
+                                                                    </li>
+                                                            {% endfor %}
+                                                    </ul> #}
+                                              </a>
+                                            {% endfor %}
+
+
                                         </li>
                                     </ul>
                             </li>

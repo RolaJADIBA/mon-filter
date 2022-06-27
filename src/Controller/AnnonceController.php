@@ -32,8 +32,23 @@ class AnnonceController extends AbstractController
             10
         );
 
+        //modifier l'annonce 
+        // $form = $this->createForm(AnnoncesType::class, $annonce);
+        // $form->handleRequest($request);
+
+        // if ($form->isSubmitted() && $form->isValid()) {
+
+        //     $doctrine = $this->getDoctrine()->getManager();
+        //     $doctrine->persist($annonce);
+        //     $doctrine->flush();
+    
+        //     return $this->redirectToRoute('annonce_user', [], Response::HTTP_SEE_OTHER);
+        // }
+
+
         return $this->render('annonce/index.html.twig', [
             'annonces' => $annonces,
+            // 'form' => $form->createView()
         ]);
     }
 
@@ -97,7 +112,7 @@ class AnnonceController extends AbstractController
     /**
      * @Route("/annonce/supprimer/{id}" , name="annonce_supprimer")
      */
-    public function annonceSupprimer(Annonces $annonce)
+    public function annonceSupprimer($id, AnnoncesRepository $annoncesRepository)
     {
         // $image = $annonce->getImages();
         // $nomImage = $this->getParameter('image_annonce'). '/' . $image->getName();
@@ -105,13 +120,14 @@ class AnnonceController extends AbstractController
         //     unlink($nomImage);
         // }
 
+        $annonce = $annoncesRepository->find($id);
         $em = $this->getDoctrine()->getManager();
         $em->remove($annonce);
         $em->flush();
 
         $this->addFlash('message', 'Annonce supprimée avec succès');
 
-        return $this->redirectToRoute('app_annonce');
+        return $this->redirectToRoute('home');
 
     }
 

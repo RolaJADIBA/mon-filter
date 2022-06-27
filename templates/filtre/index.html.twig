@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello FiltreController!{% endblock %}
+
+{% block body %}
+
+    {% for detail in details %}
+        {{detail.nom}}
+    {% endfor %}
+{% endblock %}

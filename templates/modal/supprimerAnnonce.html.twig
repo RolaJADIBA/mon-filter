@@ -3,15 +3,16 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title text-warning" id="exampleModalLabel"></h5>
+        <h5 class="modal-title text-warning" id="exampleModalLabel"><span></span></h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body text-muted">
         {# {% include "annonce_admin/_form.html.twig" %} #}
+        <p></p>
       </div>
       <div class="modal-footer">
-        <a type="button" class="btn btn-danger text-white">Supprimer</a>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <a type="button" class="btn btn-danger text-white modal-delete">Supprimer</a>
+        <button type="button" class="btn btn-secondary modal-trigger" data-bs-dismiss="modal">Fermer</button>
       </div>
     </div>
   </div>
@@ -21,21 +22,14 @@
 {% block javascripts %}
 <script>
     window.onload = () =>{
-        let buttons = document.querySelectorAll("[data-bs-target=deleteAnnonce]");
-        for(let button of buttons){
-            button.addEventListener("click",function(){
-                let xmlhttp = new XMLHttpRequest;
 
-                xmlhttp.open("get", `/annonce/supprimer/${this.dataset.annonce}`)
-                xmlhttp.send()
-            })
-        }
-        let supprimer = document.querySelectorAll("#deleteAnnonce");
-        for(let bouton of supprimer){
-            bouton.addEventListener("click", function () {
-                document.querySelector(".modal-title").innerText = `Supprimer ${this.dataset.titre}`
+        let supprimers = document.querySelectorAll(".modal-trigger");
+        console.log(supprimers);
+        for(let supprimer of supprimers){
+            supprimer.addEventListener("click", function () {
+                document.querySelector(".modal-title span").innerText = `Supprimer l'\annonce "${this.dataset.titre}"`
                 document.querySelector(".modal-footer a").href = `/annonce/supprimer/${this.dataset.annonce}`
-                document.querySelector(".modal-body").innerText = `Etes-vous sur(e) de vouloir supprimer ${this.dataset.titre}`
+                document.querySelector(".modal-body p").innerText = `Etes-vous sur(e) de vouloir supprimer l'\annonce "${this.dataset.titre}"`
             })
         }
 

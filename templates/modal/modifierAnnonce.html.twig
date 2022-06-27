@@ -10,7 +10,7 @@
         {# {% include "annonce_admin/_form.html.twig" %} #}
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary modal-trigger" data-bs-dismiss="modal">Fermer</button>
       </div>
     </div>
   </div>
@@ -20,7 +20,7 @@
 {% block javascripts %}
 <script>
   window.onload = () =>{
-    let buttons = document.querySelectorAll("[data-bs-toggle=modal]");
+    let buttons = document.querySelectorAll(".modal-trigger");
     for(let button of buttons)
     {
       // console.log(button);
