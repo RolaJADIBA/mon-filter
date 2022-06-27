@@ -28,6 +28,7 @@ class Annonces extends Fixture implements DependentFixtureInterface
             // $annonce->setImages($faker->imageUrl($width = 640, $height = 480, 'cats'));
             $annonce->setImages('blog-1.jpeg');
             $annonce->setCreatedAt($faker->dateTime($max = 'now', $timezone = null));
+            $annonce->setPrix($faker->numberBetween($min = 100, $max = 9000));
 
             $annonce->setCategorie($this->getReference('category_'.$faker->numberBetween(1, 13)));
             $annonce->setAnnonceType($this->getReference('type_'.$faker->numberBetween(1, 2)));

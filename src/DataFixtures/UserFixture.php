@@ -28,7 +28,7 @@ class UserFixture extends Fixture
                     $user->setPassword($this->encoder->encodePassword($user, 'secret'));
                     $user->setIsVerified(false);
                     $user->setUsername($faker->userName);
-                    $user->setTélephone($faker->phoneNumber);
+                    $user->setTelephone($faker->phoneNumber);
                     $user->setDateInscription($faker->dateTime($max = 'now', $timezone = null));
                     $user->setTempsReponse('10 minutes');
                     $user->setAdresse($faker->address);
